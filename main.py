@@ -130,6 +130,18 @@ class MainApp(MDApp):
             widgets = self.list_all_widgets(self.wm)
         for widget in widgets:
             try:
+                widget_name = widget.__class__.__name__
+                if widget_name in ("MDBoxLayout", "BoxLayout"):
+                    if widget.orientation == "horizontal":
+                        widget_children = list(widget.children.copy())
+                        widget.clear_widgets()
+                        for widget_child in widget_children:
+                            if hasattr(widget_child, "text"):
+                                print(widget_child.text)
+                            widget.add_widget(widget_child)
+                if widget_name in ("MDTextField", "MDTextFieldPersian"):
+                    if widget.halign != "center":
+                        widget.halign = "left"
                 current_x = widget.pos_hint['x']
                 new_x = 1 - current_x - widget.size_hint[0]
                 widget.pos_hint = {'x': new_x, 'y': widget.pos_hint['y']}
