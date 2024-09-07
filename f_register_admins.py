@@ -239,9 +239,10 @@ class RegisterAdminsLastStep(MDScreen):
     def register(self):
         global email
         if self.ids.password.text != "" and self.ids.passwordtwo.text != "" and self.ids.user_name.str != "" and self.ids.password.text == self.ids.passwordtwo.text:
-            if register_user(self.ids.user_name.str, self.ids.password.text, email):
+            result = register_user(self.ids.user_name.str, self.ids.password.text, email)
+            if result == True:
                 self.manager.current = "login_admins"
-            else:
+            elif result == False:
                 persian_text = MDApp.get_running_app(
                 ).language_dialogs["name_duplicated_error"]
                 text = "[font={}]{}[/font]".format(FONT_PATH,
@@ -262,6 +263,28 @@ class RegisterAdminsLastStep(MDScreen):
                     ]
                 )
                 self.dialog.open()
+            elif result == 'internet':
+                persian_text = MDApp.get_running_app(
+                ).language_dialogs["network_error"]
+                text = "[font={}]{}[/font]".format(FONT_PATH,
+                                                   get_display(reshape(persian_text)))
+                self.dialog = MDDialog(
+                    title=text,
+                    buttons=[
+                        MDFlatButton(
+                            text=get_display(
+                                reshape(
+                                    MDApp.get_running_app(
+                                    ).language_dialogs["i_got_it"]
+                                )
+                            ),
+                            font_name=FONT_PATH,
+                            on_release=lambda instance: self.dialog.dismiss()
+                        )
+                    ]
+                )
+                self.dialog.open()
+
         else:
             persian_text = MDApp.get_running_app().language_dialogs["name_and_password_error"]
             text = "[font={}]{}[/font]".format(FONT_PATH,
