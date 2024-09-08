@@ -62,7 +62,7 @@ def notice_for_login_with_account(email:str) -> bool:
     except:
         return False
     
-def notify_creator_about_new_user(username, email) -> bool:
+def notify_creator_about_new_user(username:str, email:str) -> bool:
     '''Send a notification to the creator email when we recognize someone registered in BUFFET.'''
     try:
         db = sqlite3.connect(DATABASE_PATH)
@@ -90,6 +90,32 @@ def notify_creator_about_new_user(username, email) -> bool:
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
             smtp_server.login(sender, password)
             smtp_server.sendmail(sender, creator_email, msg.as_string())
+        return True
+    except:
+        return False
+    
+def welcome_new_user(name:str, email:str) -> bool:
+    '''Say welcome to the new user.'''
+    try:
+        with open(LANGUAGE_PATH, 'r') as file:
+            lang = file.read()
+        if lang=='per':
+            path = 'html_pages/say_welcome_to_new_user_per.html'
+            subject = "به بوفه خوش آمدید!"
+        else:
+            path = 'html_pages/say_welcome_to_new_user_eng.html'
+            subject = "Welcome to the BUFFET app!"
+        with open(path, encoding='UTF-8') as file:
+            content = file.read()
+        modified_content = content.replace('{}', str(name))
+        msg = EmailMessage()
+        msg['Subject'] = subject
+        msg['From'] = sender
+        msg['To'] = email
+        msg.set_content(modified_content, subtype="html")
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
+            smtp_server.login(sender, password)
+            smtp_server.sendmail(sender, email, msg.as_string())
         return True
     except:
         return False
