@@ -1,4 +1,4 @@
-from b_email_handler import send_code_for_verification, notice_for_login_with_account, notify_creator_about_new_user
+from b_email_handler import send_code_for_verification, notice_for_login_with_account, notify_creator_about_new_user, welcome_new_user
 import sqlite3
 from important_variables import DATABASE_PATH
 
@@ -53,6 +53,9 @@ def register_user(username: str, password: str, email: str) -> bool:
         db.execute('INSERT INTO users (name, password, email, type, is_current) VALUES (?,?,?,?,?)', (username, password, email, type, 'False'))
         db.commit()
         db.close()
+        email_sended = welcome_new_user(username, email)
+        if not email_sended:
+            return 'internet'
         return True
     else:
         return False
