@@ -1,3 +1,4 @@
+import threading
 from kivy.clock import Clock
 from kivymd.app import MDApp
 from kivymd.uix.button import MDFlatButton, MDRaisedButton
@@ -62,8 +63,15 @@ KV = """
             on_release: root.next_step()
 
 <RegisterGetFace>:
-    MDPersianLabel:
-        label_text: app.language_dialogs["taking_picture"] + "..."
+    MDFloatLayout:
+        MDPersianLabel:
+            label_text: app.language_dialogs["taking_picture"] + "..."
+            size_hint: .2, .1
+            pos_hint: {"x": .4, "y": .45}
+        MDSpinner:
+            size_hint: None, None
+            size: dp(46), dp(46)
+            pos_hint: {'center_x': .5, 'center_y': .4}
 """
 
 
@@ -165,9 +173,11 @@ class RegisterGetName(MDScreen):
             self.manager.current = "register_get_face"
         else:
             if not capture.isOpened():
-                persian_text = MDApp.get_running_app().language_dialogs["webcam_error"]
+                persian_text = MDApp.get_running_app(
+                ).language_dialogs["webcam_error"]
             else:
-                persian_text = MDApp.get_running_app().language_dialogs["n_or_c_or_s_or_c_error"]
+                persian_text = MDApp.get_running_app(
+                ).language_dialogs["n_or_c_or_s_or_c_error"]
             text = "[font={}]{}[/font]".format(FONT_PATH,
                                                get_display(reshape(persian_text)))
             self.dialog = MDDialog(
@@ -190,7 +200,12 @@ class RegisterGetName(MDScreen):
 
 class RegisterGetFace(MDScreen):
 
-    def on_enter(self):
+    def process(self):
         register_buyer(
-            register_name, register_charge, register_school, register_class)
+            register_name, register_charge,
+            register_school, register_class)
+
+    def on_enter(self):
+        thread = threading.Thread(target=self.process)
+        thread.start()
         self.manager.current = "home"
