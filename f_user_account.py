@@ -20,6 +20,7 @@ from important_variables import FONT_PATH
 from arabic_reshaper import reshape
 from bidi.algorithm import get_display
 import threading
+import queue
 
 last_was_operator = None
 calculator_value = 0
@@ -883,14 +884,24 @@ class ChangeUserFaceAsk(MDScreen):
 
 class ChangeUserFaceProcess(MDScreen):
 
-    def process(self):
-        global user_name_
-        change_buyer_face(user_name_)
-
     def on_enter(self):
-        thread = threading.Thread(target=self.process)
-        thread.start()
-        self.manager.current = "user_account"
+        self.queue = queue.Queue()
+        Clock.schedule_interval(self.process_queue, 0.1)
+        self.start_worker_thread()
+
+    def start_worker_thread(self):
+        def worker():
+            global user_name_
+            change_buyer_face(user_name_)
+            self.queue.put(lambda: setattr(self.manager, 'current', 'user_account'))
+
+
+        threading.Thread(target=worker).start()
+
+    def process_queue(self, dt):
+        while not self.queue.empty():
+            callback = self.queue.get()
+            callback()
 
 
 class Log(MDScreen):

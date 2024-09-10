@@ -27,26 +27,18 @@ KV = """
             size_hint: .2, .1
             on_release: root.manager.current = "settings"
         MDBottomNavigation:
+            id: bottom_navigation
             pos_hint: {"x": 0, "y": 0}
             size_hint: 1, .9
             font_name: app.FONT_PATH
             MDBottomNavigationItem:
-                name: "screen 1"
-                text: app.persian(app.language_dialogs["schools"])
-                icon: "school"
-                on_tab_press: root.on_school_press()
+                name: "screen 4"
+                text: app.persian(app.language_dialogs["users"])
+                icon: "account-multiple"
+                on_tab_press: root.on_users_press()
 
                 MDFloatLayout:
-                    id: database_schools
-
-            MDBottomNavigationItem:
-                name: "screen 2"
-                text: app.persian(app.language_dialogs["classes"])
-                icon: "chair-school"
-                on_tab_press: root.on_class_press()
-
-                MDFloatLayout:
-                    id: database_classes
+                    id: database_users
 
             MDBottomNavigationItem:
                 name: "screen 3"
@@ -58,13 +50,22 @@ KV = """
                     id: database_products
 
             MDBottomNavigationItem:
-                name: "screen 4"
-                text: app.persian(app.language_dialogs["users"])
-                icon: "account-multiple"
-                on_tab_press: root.on_users_press()
+                name: "screen 2"
+                text: app.persian(app.language_dialogs["classes"])
+                icon: "chair-school"
+                on_tab_press: root.on_class_press()
 
                 MDFloatLayout:
-                    id: database_users
+                    id: database_classes
+
+            MDBottomNavigationItem:
+                name: "screen 1"
+                text: app.persian(app.language_dialogs["schools"])
+                icon: "school"
+                on_tab_press: root.on_school_press()
+
+                MDFloatLayout:
+                    id: database_schools
 """
 
 

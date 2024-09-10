@@ -1,4 +1,5 @@
 import threading
+import queue
 from kivy.clock import Clock
 from kivymd.app import MDApp
 from kivymd.uix.button import MDFlatButton, MDRaisedButton
@@ -167,7 +168,7 @@ class RegisterGetName(MDScreen):
             classes = read_classes(register_school)
         except KeyError:
             classes = []
-        if check_name_is_new(register_name) and register_charge != "" and register_charge != None and capture.isOpened() and register_school in schools and register_school != "" and register_class in classes and register_class != "":
+        if check_name_is_new(register_name) and register_charge != "" and register_charge != None and capture.isOpened() and register_school in schools and register_school != "" and register_school != None and register_class in classes and register_class != "" and register_class != None:
             self.ids.register_user_name.str = ""
             self.ids.register_user_name.str = ""
             self.manager.current = "register_get_face"
@@ -200,12 +201,21 @@ class RegisterGetName(MDScreen):
 
 class RegisterGetFace(MDScreen):
 
-    def process(self):
-        register_buyer(
-            register_name, register_charge,
-            register_school, register_class)
+    def start_worker_thread(self):
+        def worker():
+            register_buyer(
+                register_name, register_charge,
+                register_school, register_class)
+            self.queue.put(lambda: setattr(self.manager, 'current', 'home'))
+
+        threading.Thread(target=worker).start()
+
+    def process_queue(self, dt):
+        while not self.queue.empty():
+            callback = self.queue.get()
+            callback()
 
     def on_enter(self):
-        thread = threading.Thread(target=self.process)
-        thread.start()
-        self.manager.current = "home"
+        self.queue = queue.Queue()
+        Clock.schedule_interval(self.process_queue, 0.1)
+        self.start_worker_thread()
