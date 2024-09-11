@@ -2,7 +2,7 @@ import random
 from email.message import EmailMessage
 import smtplib
 from datetime import datetime
-from important_variables import LANGUAGE_PATH, DATABASE_PATH
+from important_variables import LANGUAGE_PATH, DATABASE_PATH, BUFFET_EXTENSIONS_PATH
 import sqlite3
 
 sender = "buffetprogramm@gmail.com"
@@ -15,10 +15,10 @@ def send_code_for_verification(email:str) -> int | bool:
         with open(LANGUAGE_PATH, 'r') as file:
             lang = file.read()
         if lang=='per':
-            path = 'html_pages/send_code_for_verification_per.html'
+            path = BUFFET_EXTENSIONS_PATH+'/send_code_for_verification_per.html'
             subject = "کد اعتبارسنجی برنامه بوفه"
         else:
-            path = 'html_pages/send_code_for_verification_eng.html'
+            path = BUFFET_EXTENSIONS_PATH+'/send_code_for_verification_eng.html'
             subject = "BUFFET verification code"
         with open(path, encoding='UTF-8') as file:
             content = file.read()
@@ -42,10 +42,10 @@ def notice_for_login_with_account(email:str) -> bool:
         with open(LANGUAGE_PATH, 'r') as file:
             lang = file.read()
         if lang=='per':
-            path = 'html_pages/notice_for_login_with_account_per.html'
+            path = BUFFET_EXTENSIONS_PATH+'/notice_for_login_with_account_per.html'
             subject = "اعلان ورود به برنامه بوفه"
         else:
-            path = 'html_pages/notice_for_login_with_account_eng.html'
+            path = BUFFET_EXTENSIONS_PATH+'/notice_for_login_with_account_eng.html'
             subject = "BUFFET login notification"
         with open(path, encoding='UTF-8') as file:
             content = file.read()
@@ -72,10 +72,10 @@ def notify_creator_about_new_user(username:str, email:str) -> bool:
         with open(LANGUAGE_PATH, 'r') as file:
             lang = file.read()
         if lang=='per':
-            path = 'html_pages/notify_creator_about_new_user_per.html'
+            path = BUFFET_EXTENSIONS_PATH+'/notify_creator_about_new_user_per.html'
             subject = "اعلان ثبت نام در برنامه بوفه"
         else:
-            path = 'html_pages/notify_creator_about_new_user_eng.html'
+            path = BUFFET_EXTENSIONS_PATH+'/notify_creator_about_new_user_eng.html'
             subject = "BUFFET user registration notification"
         with open(path, encoding='UTF-8') as file:
             content = file.read()
@@ -100,10 +100,10 @@ def welcome_new_user(name:str, email:str) -> bool:
         with open(LANGUAGE_PATH, 'r') as file:
             lang = file.read()
         if lang=='per':
-            path = 'html_pages/say_welcome_to_new_user_per.html'
+            path = BUFFET_EXTENSIONS_PATH+'/say_welcome_to_new_user_per.html'
             subject = "به بوفه خوش آمدید!"
         else:
-            path = 'html_pages/say_welcome_to_new_user_eng.html'
+            path = BUFFET_EXTENSIONS_PATH+'/say_welcome_to_new_user_eng.html'
             subject = "Welcome to the BUFFET app!"
         with open(path, encoding='UTF-8') as file:
             content = file.read()
