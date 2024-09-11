@@ -1,4 +1,7 @@
 import threading
+import queue
+import cv2
+from kivy.clock import Clock
 from kivymd.app import MDApp
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.screen import MDScreen
@@ -12,7 +15,6 @@ user_name = ""
 user_charge = 0
 user_school = ""
 user_class = ""
-output = None
 
 KV = """
 <Login>:
@@ -55,45 +57,58 @@ KV = """
 
 class Login(MDScreen):
 
+    def open_dialog(self):
+        persian_text = MDApp.get_running_app().language_dialogs["webcam_error"]
+        text = "[font={}]{}[/font]".format(FONT_PATH,
+                                        get_display(reshape(persian_text)))
+        self.dialog = MDDialog(
+            title=text,
+            buttons=[
+                MDFlatButton(
+                    text=get_display(
+                        reshape(
+                            MDApp.get_running_app(
+                            ).language_dialogs["i_got_it"]
+                        )
+                    ),
+                    font_name=FONT_PATH,
+                    on_release=self.close_dialog
+                )
+            ]
+        )
+        self.dialog.open()
+
     def close_dialog(self, instance):
         self.dialog.dismiss()
         self.manager.current = "home"
 
-    def process(self):
-        global output
-        output = submit_information()
+    def start_worker_thread(self):
+        def worker():
+            global user_name, user_charge, user_school, user_class
+            capture = cv2.VideoCapture(0)
+            if capture.isOpened():
+                output = submit_information()
+                if output:
+                    if output != "unknown":
+                        user_name, user_charge, user_school, user_class = output
+                        next_screen = "user_account"
+                    else:
+                        next_screen = "not_logined"
+                    self.queue.put(lambda: setattr(self.manager, 'current', next_screen))
+            else:
+                self.queue.put(self.open_dialog)
+
+        threading.Thread(target=worker).start()
+
+    def process_queue(self, dt):
+        while not self.queue.empty():
+            callback = self.queue.get()
+            callback()
 
     def on_enter(self):
-        global user_name, user_charge, user_school, user_class, output
-        t = threading.Thread(target=self.process)
-        t.start()
-        if output:
-            if output != "unknown":
-                user_name, user_charge, user_school, user_class = output
-                next_screen = "user_account"
-            else:
-                next_screen = "not_logined"
-            self.manager.current = next_screen
-        else:
-            persian_text = MDApp.get_running_app().language_dialogs["webcam_error"]
-            text = "[font={}]{}[/font]".format(FONT_PATH,
-                                               get_display(reshape(persian_text)))
-            self.dialog = MDDialog(
-                title=text,
-                buttons=[
-                    MDFlatButton(
-                        text=get_display(
-                            reshape(
-                                MDApp.get_running_app(
-                                ).language_dialogs["i_got_it"]
-                            )
-                        ),
-                        font_name=FONT_PATH,
-                        on_release=self.close_dialog
-                    )
-                ]
-            )
-            self.dialog.open()
+        self.queue = queue.Queue()
+        Clock.schedule_interval(self.process_queue, 0.1)
+        self.start_worker_thread()
 
 
 class NotLogined(MDScreen):
