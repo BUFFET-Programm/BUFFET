@@ -19,6 +19,7 @@ from b_manage_users import user_type, current_user_name
 from important_variables import FONT_PATH
 from arabic_reshaper import reshape
 from bidi.algorithm import get_display
+import threading
 
 last_was_operator = None
 calculator_value = 0
@@ -278,8 +279,15 @@ KV = """
             on_release: root.manager.current = "change_user_face_process"
 
 <ChangeUserFaceProcess>:
-    MDPersianLabel:
-        label_text: app.language_dialogs["taking_picture"] + "..."
+    MDFloatLayout:
+        MDPersianLabel:
+            label_text: app.language_dialogs["taking_picture"] + "..."
+            size_hint: .2, .1
+            pos_hint: {"x": .4, "y": .45}
+        MDSpinner:
+            size_hint: None, None
+            size: dp(46), dp(46)
+            pos_hint: {'center_x': .5, 'center_y': .4}
 
 <Log>:
     MDBoxLayout:
@@ -875,9 +883,13 @@ class ChangeUserFaceAsk(MDScreen):
 
 class ChangeUserFaceProcess(MDScreen):
 
-    def on_enter(self):
+    def process(self):
         global user_name_
         change_buyer_face(user_name_)
+
+    def on_enter(self):
+        thread = threading.Thread(target=self.process)
+        thread.start()
         self.manager.current = "user_account"
 
 

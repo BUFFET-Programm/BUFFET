@@ -105,8 +105,7 @@ class WindowManager(ScreenManager):
 
 
 class MainApp(MDApp):
-    font_path = '/extensions/iransans.ttf'
-    FONT_PATH = BASE_DIR + font_path
+    FONT_PATH = BASE_DIR + "/extensions/iransans.ttf"
     colors = COLORS
 
     def list_all_widgets(self, screen_manager):
@@ -136,8 +135,6 @@ class MainApp(MDApp):
                         widget_children = list(widget.children.copy())
                         widget.clear_widgets()
                         for widget_child in widget_children:
-                            if hasattr(widget_child, "text"):
-                                print(widget_child.text)
                             widget.add_widget(widget_child)
                 if widget_name in ("MDTextField", "MDTextFieldPersian"):
                     if widget.halign != "center":

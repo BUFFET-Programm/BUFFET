@@ -1,3 +1,4 @@
+import threading
 from kivymd.app import MDApp
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.screen import MDScreen
@@ -11,11 +12,19 @@ user_name = ""
 user_charge = 0
 user_school = ""
 user_class = ""
+output = None
 
 KV = """
 <Login>:
-    MDPersianLabel:
-        label_text: app.language_dialogs["processing"] + "..."
+    MDFloatLayout:
+        MDPersianLabel:
+            label_text: app.language_dialogs["processing"] + "..."
+            size_hint: .2, .1
+            pos_hint: {"x": .4, "y": .45}
+        MDSpinner:
+            size_hint: None, None
+            size: dp(46), dp(46)
+            pos_hint: {'center_x': .5, 'center_y': .4}
 
 <NotLogined>:
     MDFloatLayout:
@@ -50,9 +59,14 @@ class Login(MDScreen):
         self.dialog.dismiss()
         self.manager.current = "home"
 
-    def on_enter(self):
-        global user_name, user_charge, user_school, user_class
+    def process(self):
+        global output
         output = submit_information()
+
+    def on_enter(self):
+        global user_name, user_charge, user_school, user_class, output
+        t = threading.Thread(target=self.process)
+        t.start()
         if output:
             if output != "unknown":
                 user_name, user_charge, user_school, user_class = output
