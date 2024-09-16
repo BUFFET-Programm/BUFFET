@@ -8,6 +8,8 @@ from kivymd.uix.screen import MDScreen
 from f_components import MDFlatButton
 from important_variables import FONT_PATH
 from b_manage_users import email_is_new, register_user, send_code_for_verification
+import threading
+import queue
 
 email_code = 0
 email = ""
@@ -36,6 +38,7 @@ KV = """
             font_name: app.FONT_PATH
             on_release: root.manager.current = "login_admins"
         MDRectangleFlatIconButton:
+            id: send_button
             button_text: app.language_dialogs["send_code"]
             icon: "send"
             on_release: root.send_code()
@@ -88,6 +91,7 @@ KV = """
             hint_text: app.persian(app.language_dialogs["confirm_password"])
             font_name_hint_text: app.FONT_PATH
         MDRectangleFlatIconButton:
+            id: register_button
             button_text: app.language_dialogs["register"]
             icon: "account-plus"
             on_release: root.register()
@@ -114,7 +118,7 @@ class RegisterAdminsEmail(MDScreen):
     def on_enter(self):
         self.do_shortcuts = True
 
-    def send_code(self):
+    def send_code_process(self):
         global email_code, email
         email = self.ids.email.str
         if email_is_new(email):
@@ -163,6 +167,24 @@ class RegisterAdminsEmail(MDScreen):
                 ]
             )
             self.dialog.open()
+
+    def start_worker_thread(self):
+        def worker():
+            self.queue.put(lambda: setattr(self.ids.send_button, "disabled", True))
+            self.queue.put(lambda: self.send_code_process())
+            self.queue.put(lambda: setattr(self.ids.send_button, "disabled", False))
+
+        threading.Thread(target=worker).start()
+
+    def process_queue(self, dt):
+        while not self.queue.empty():
+            callback = self.queue.get()
+            callback()
+
+    def send_code(self):
+        self.queue = queue.Queue()
+        Clock.schedule_interval(self.process_queue, 0.1)
+        self.start_worker_thread()
 
 
 class RegisterAdminsCode(MDScreen):
@@ -236,7 +258,7 @@ class RegisterAdminsLastStep(MDScreen):
     def on_enter(self):
         self.do_shortcuts = True
 
-    def register(self):
+    def register_process(self):
         global email
         if self.ids.password.text != "" and self.ids.passwordtwo.text != "" and self.ids.user_name.str != "":
             if self.ids.password.text == self.ids.passwordtwo.text:
@@ -326,3 +348,21 @@ class RegisterAdminsLastStep(MDScreen):
                 ]
             )
             self.dialog.open()
+
+    def start_worker_thread(self):
+        def worker():
+            self.queue.put(lambda: setattr(self.ids.register_button, "disabled", True))
+            self.queue.put(lambda: self.register_process())
+            self.queue.put(lambda: setattr(self.ids.register_button, "disabled", False))
+
+        threading.Thread(target=worker).start()
+
+    def process_queue(self, dt):
+        while not self.queue.empty():
+            callback = self.queue.get()
+            callback()
+
+    def register(self):
+        self.queue = queue.Queue()
+        Clock.schedule_interval(self.process_queue, 0.1)
+        self.start_worker_thread()

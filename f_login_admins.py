@@ -8,6 +8,8 @@ from f_components import MDFlatButton
 from kivymd.uix.dialog import MDDialog
 from important_variables import FONT_PATH
 from b_manage_users import enter_user
+import threading
+import queue
 
 KV = """
 <LoginAdmins>:
@@ -37,6 +39,7 @@ KV = """
             font_name: app.FONT_PATH
             on_release: root.manager.current = "register_admins_email"
         MDRectangleFlatIconButton:
+            id: enter_button
             button_text: app.language_dialogs["enter"]
             icon: "login-variant"
             on_release: root.next_step()
@@ -73,8 +76,7 @@ class LoginAdmins(MDScreen):
     def on_enter(self):
         self.do_shortcuts = True
 
-    def next_step(self):
-        mode = enter_user(self.ids.user_name.str, self.ids.password.text)
+    def show_dialog(self, mode):
         if mode == True:
             self.manager.current = "home"
         else:
@@ -84,7 +86,7 @@ class LoginAdmins(MDScreen):
             elif mode == "password" or mode == "name":
                 persian_text = MDApp.get_running_app().language_dialogs["name_or_password_error"]
             text = "[font={}]{}[/font]".format(FONT_PATH,
-                                               get_display(reshape(persian_text)))
+                                            get_display(reshape(persian_text)))
             self.dialog = MDDialog(
                 title=text,
                 buttons=[
@@ -96,4 +98,23 @@ class LoginAdmins(MDScreen):
                 ]
             )
             self.dialog.open()
+
+    def start_worker_thread(self):
+        def worker():
+            self.queue.put(lambda: setattr(self.ids.enter_button, "disabled", True))
+            mode = enter_user(self.ids.user_name.str, self.ids.password.text)
+            self.queue.put(lambda: self.show_dialog(mode))
+            self.queue.put(lambda: setattr(self.ids.enter_button, "disabled", False))
+
+        threading.Thread(target=worker).start()
+
+    def process_queue(self, dt):
+        while not self.queue.empty():
+            callback = self.queue.get()
+            callback()
+
+    def next_step(self):
+        self.queue = queue.Queue()
+        Clock.schedule_interval(self.process_queue, 0.1)
+        self.start_worker_thread()
 

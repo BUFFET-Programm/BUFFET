@@ -52,36 +52,39 @@ def create_files_and_folders() -> None:
 
 def download_files() -> bool:
     '''Downloads extensions from internet. returns False when internet error.'''
-    files = set(listdir(BUFFET_EXTENSIONS_PATH))
-    if not len(files) == 11:
-            rmtree(BUFFET_EXTENSIONS_PATH)
-            mkdir(BUFFET_EXTENSIONS_PATH)
-            urlretrieve('https://github.com/BUFFET-Programm/Extensions-Of-Buffet-Project/raw/main/haarcascade_frontalface_alt.xml',
-                        ALGORITHM_PATH)
-            urlretrieve('https://github.com/BUFFET-Programm/Extensions-Of-Buffet-Project/raw/main/iransans.ttf',
-                        BUFFET_EXTENSIONS_PATH+'/iransans.ttf')
-            urlretrieve('https://github.com/BUFFET-Programm/Extensions-Of-Buffet-Project/raw/main/icon.ico',
-                        BUFFET_EXTENSIONS_PATH+'/icon.ico')
-            
-            urlretrieve('https://raw.githubusercontent.com/BUFFET-Programm/BUFFET/main/email_pages/notice_for_login_with_account_eng.html',
-                        BUFFET_EXTENSIONS_PATH+'/notice_for_login_with_account_eng.html')
-            urlretrieve('https://raw.githubusercontent.com/BUFFET-Programm/BUFFET/main/email_pages/notice_for_login_with_account_per.html',
-                        BUFFET_EXTENSIONS_PATH+'/notice_for_login_with_account_per.html')
-            urlretrieve('https://raw.githubusercontent.com/BUFFET-Programm/BUFFET/main/email_pages/notify_creator_about_new_user_eng.html',
-                        BUFFET_EXTENSIONS_PATH+'/notify_creator_about_new_user_eng.html')
-            urlretrieve('https://raw.githubusercontent.com/BUFFET-Programm/BUFFET/main/email_pages/notify_creator_about_new_user_per.html',
-                        BUFFET_EXTENSIONS_PATH+'/notify_creator_about_new_user_per.html')
-            urlretrieve('https://raw.githubusercontent.com/BUFFET-Programm/BUFFET/main/email_pages/say_welcome_to_new_user_eng.html',
-                        BUFFET_EXTENSIONS_PATH+'/say_welcome_to_new_user_eng.html')
-            urlretrieve('https://raw.githubusercontent.com/BUFFET-Programm/BUFFET/main/email_pages/say_welcome_to_new_user_per.html',
-                        BUFFET_EXTENSIONS_PATH+'/say_welcome_to_new_user_per.html')
-            urlretrieve('https://raw.githubusercontent.com/BUFFET-Programm/BUFFET/main/email_pages/send_code_for_verification_eng.html',
-                        BUFFET_EXTENSIONS_PATH+'/send_code_for_verification_eng.html')
-            urlretrieve('https://raw.githubusercontent.com/BUFFET-Programm/BUFFET/main/email_pages/send_code_for_verification_per.html',
-                        BUFFET_EXTENSIONS_PATH+'/send_code_for_verification_per.html')
-    else:
-        pass
-    return True
+    try:
+        files = set(listdir(BUFFET_EXTENSIONS_PATH))
+        if not len(files) == 11:
+                rmtree(BUFFET_EXTENSIONS_PATH)
+                mkdir(BUFFET_EXTENSIONS_PATH)
+                urlretrieve('https://github.com/BUFFET-Programm/Extensions-Of-Buffet-Project/raw/main/haarcascade_frontalface_alt.xml',
+                            ALGORITHM_PATH)
+                urlretrieve('https://github.com/BUFFET-Programm/Extensions-Of-Buffet-Project/raw/main/iransans.ttf',
+                            BUFFET_EXTENSIONS_PATH+'/iransans.ttf')
+                urlretrieve('https://github.com/BUFFET-Programm/Extensions-Of-Buffet-Project/raw/main/icon.ico',
+                            BUFFET_EXTENSIONS_PATH+'/icon.ico')
+                
+                urlretrieve('https://raw.githubusercontent.com/BUFFET-Programm/BUFFET/main/email_pages/notice_for_login_with_account_eng.html',
+                            BUFFET_EXTENSIONS_PATH+'/notice_for_login_with_account_eng.html')
+                urlretrieve('https://raw.githubusercontent.com/BUFFET-Programm/BUFFET/main/email_pages/notice_for_login_with_account_per.html',
+                            BUFFET_EXTENSIONS_PATH+'/notice_for_login_with_account_per.html')
+                urlretrieve('https://raw.githubusercontent.com/BUFFET-Programm/BUFFET/main/email_pages/notify_creator_about_new_user_eng.html',
+                            BUFFET_EXTENSIONS_PATH+'/notify_creator_about_new_user_eng.html')
+                urlretrieve('https://raw.githubusercontent.com/BUFFET-Programm/BUFFET/main/email_pages/notify_creator_about_new_user_per.html',
+                            BUFFET_EXTENSIONS_PATH+'/notify_creator_about_new_user_per.html')
+                urlretrieve('https://raw.githubusercontent.com/BUFFET-Programm/BUFFET/main/email_pages/say_welcome_to_new_user_eng.html',
+                            BUFFET_EXTENSIONS_PATH+'/say_welcome_to_new_user_eng.html')
+                urlretrieve('https://raw.githubusercontent.com/BUFFET-Programm/BUFFET/main/email_pages/say_welcome_to_new_user_per.html',
+                            BUFFET_EXTENSIONS_PATH+'/say_welcome_to_new_user_per.html')
+                urlretrieve('https://raw.githubusercontent.com/BUFFET-Programm/BUFFET/main/email_pages/send_code_for_verification_eng.html',
+                            BUFFET_EXTENSIONS_PATH+'/send_code_for_verification_eng.html')
+                urlretrieve('https://raw.githubusercontent.com/BUFFET-Programm/BUFFET/main/email_pages/send_code_for_verification_per.html',
+                            BUFFET_EXTENSIONS_PATH+'/send_code_for_verification_per.html')
+        else:
+            pass
+        return True
+    except:
+        return False
 
 def delete_all_data() -> None:
     """Deletes all data."""

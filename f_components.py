@@ -1,6 +1,7 @@
 from kivy.clock import Clock
 from kivy.properties import StringProperty, NumericProperty
 from kivymd.uix.button import MDFlatButton, MDIconButton, MDRectangleFlatIconButton
+from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.textfield import MDTextField
 from kivymd.uix.label import MDLabel
 from arabic_reshaper import reshape
@@ -95,6 +96,8 @@ KV = """
     font_name_hint_text: app.FONT_PATH
     halign: "right"
 
+<MDBoxLayoutNoReverse@MDBoxLayout>:
+
 """
 
 
@@ -151,3 +154,7 @@ class MDFlatButton(MDFlatButton):
 class MDRectangleFlatIconButton(MDRectangleFlatIconButton):
     name = StringProperty("")
     button_text = StringProperty("")
+
+
+class MDBoxLayoutNoReverse(MDBoxLayout):
+    pass
