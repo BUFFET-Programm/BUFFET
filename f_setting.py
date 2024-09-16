@@ -79,6 +79,16 @@ KV = """
             id: passwordtwo
             hint_text: app.persian(app.language_dialogs["confirm_password"])
             font_name_hint_text: app.FONT_PATH
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: None, None
+        size: 200, 50
+        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+        spacing: 25
+        MDFlatButton:
+            text: app.persian(app.language_dialogs["cancel"])
+            font_name: app.FONT_PATH
+            on_release: root.manager.current = "account_setting"
         MDRectangleFlatIconButton:
             button_text: app.language_dialogs["change_password"]
             icon: "key-variant"
@@ -96,6 +106,16 @@ KV = """
             persian_hint_text: app.language_dialogs["new_username"]
             font_size: 20
             halign: "left"
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: None, None
+        size: 200, 50
+        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+        spacing: 25
+        MDFlatButton:
+            text: app.persian(app.language_dialogs["cancel"])
+            font_name: app.FONT_PATH
+            on_release: root.manager.current = "account_setting"
         MDRectangleFlatIconButton:
             button_text: app.language_dialogs["change_username"]
             icon: "rename-box"

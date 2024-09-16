@@ -62,7 +62,11 @@ def read_all_buyers_name() -> list:
 def take_images_from_buyer_face() -> None:
     '''Takes images from buyer face and saves them.'''
     folder_path = BASE_DIR+'/tmp_images'
-    mkdir(folder_path)
+    try:
+        mkdir(folder_path)
+    except FileExistsError:
+        rmtree(folder_path)
+        mkdir(folder_path)
     count = 0
     cap = cv2.VideoCapture(0)
     while count < 70:
@@ -102,7 +106,6 @@ def register_buyer_in_trainer(id: int) -> None:
         recognizer.read(TRAINER_FILE_PATH)
         recognizer.update(face_samples, np.array(ids))
     recognizer.write(TRAINER_FILE_PATH)
-    rmtree(folder_path)
 
 def register_buyer(name: str, charge: int, school: str, class_: str) -> None:
     '''A method for call others methods for register buyer.'''

@@ -11,7 +11,7 @@ from b_buyer_log import read_logs, delete_log
 from kivy.clock import Clock
 import pygame
 from b_product import read_product
-from f_components import MDFlatButton, MDIconButton, MDPersianLabel
+from f_components import MDFlatButton, MDIconButton, MDPersianLabel, MDBoxLayoutNoReverse
 from b_charge_and_buy import buy, charge, read_charge
 from f_create_numbers import create_numbers
 from b_manage_buyers import check_name_is_new, change_buyer_name, change_buyer_face
@@ -43,12 +43,14 @@ KV = """
             pos_hint: {"x": 0,"y": .9}
             size_hint: .4, .1
             on_release: root.go_to_setting_page()
+            line_color: app.theme_cls.bg_normal
         MDRectangleFlatIconButton:
             button_text: app.language_dialogs["home"]
             icon: "home"
             pos_hint: {"x": .4,"y": .9}
             size_hint: .4, .1
             on_release: root.manager.current = "home"
+            line_color: app.theme_cls.bg_normal
         MDPersianLabel:
             label_text: root.user_name
             id: user_name
@@ -67,6 +69,7 @@ KV = """
             size_hint: .2, .1
             pos_hint: {"x": .8, "y": .9}
             on_release: root.manager.current = "log"
+            line_color: app.theme_cls.bg_normal
         MDIconButton:
             icon: "delete"
             pos_hint: {"x": 0,"y": .7}
@@ -91,6 +94,7 @@ KV = """
             on_release: root.charge_or_buy(root.user_name, root.ids.buy.text, "buy")
             pos_hint: {"x": .55,"y": .7}
             size_hint: .2, .1
+            line_color: app.theme_cls.bg_normal
         MDFloatLayout:
             id: charge_or_hand_enter
             size_hint: 1, 1
@@ -119,6 +123,7 @@ KV = """
                 on_release: root.charge_or_buy(root.user_name, root.ids.charge.text, "charge")
                 pos_hint: {"x": .55,"y": .6}
                 size_hint: .2, .1
+                line_color: app.theme_cls.bg_normal
             Calculator:
                 id: calculator
                 pos_hint: {"x": 0,"y": .1}
@@ -129,6 +134,7 @@ KV = """
                 pos_hint: {"x": 0,"y": 0}
                 size_hint: .2, .1
                 on_release: root.change_view("charge_or_hand_enter", "enter_products")
+                line_color: app.theme_cls.bg_normal
             MDRectangleFlatIconButton:
                 button_text: app.language_dialogs["add_to_buy"]
                 icon: "credit-card-plus"
@@ -137,6 +143,7 @@ KV = """
                 on_release: root.add_to_buy()
                 pos_hint: {"x": .2,"y": 0}
                 size_hint: .3, .1
+                line_color: app.theme_cls.bg_normal
             MDRectangleFlatIconButton:
                 button_text: app.language_dialogs["add_to_charge"]
                 icon: "battery-plus"
@@ -145,6 +152,7 @@ KV = """
                 on_release: root.add_to_charge()
                 pos_hint: {"x": .5,"y": 0}
                 size_hint: .3, .1
+                line_color: app.theme_cls.bg_normal
         MDFloatLayout:
             id: enter_products
             size_hint: 1, 1
@@ -167,7 +175,7 @@ KV = """
                 id: number_of_products
                 text: "0"
                 pos_hint: {"x": .49,"y": .325}
-                size_hint: .05, .05
+                size_hint: .02, .05
                 font_size: 30
             MDIconButton:
                 icon: "plus-circle"
@@ -181,6 +189,7 @@ KV = """
                 pos_hint: {"x": .65,"y": .3}
                 size_hint: .1, .1
                 on_release: root.add_product()
+                line_color: app.theme_cls.bg_normal
             MDIconButton:
                 icon: "delete"
                 icon_size: 30
@@ -205,6 +214,7 @@ KV = """
                 pos_hint: {"x": 0,"y": 0}
                 size_hint: .2, .1
                 on_release: root.change_view("enter_products", "charge_or_hand_enter")
+                line_color: app.theme_cls.bg_normal
         MDPersianLabel:
             id: school
             pos_hint: {'x': .4, 'y': .8}
@@ -218,6 +228,7 @@ KV = """
             pos_hint: {"x": .8,"y": 0}
             size_hint: .2, .9
             on_release: root.manager.current = "login"
+            line_color: app.theme_cls.bg_normal
 
 <Setting>:
     MDFloatLayout:
@@ -712,7 +723,7 @@ class UserAccount(MDScreen):
             self.dialog.open()
 
 
-class Calculator(MDBoxLayout):
+class Calculator(MDBoxLayoutNoReverse):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -730,7 +741,7 @@ class Calculator(MDBoxLayout):
             ["=", "+", "-"]
         ]
         for row in buttons:
-            h_layout = MDBoxLayout()
+            h_layout = MDBoxLayoutNoReverse()
             for label in row:
                 if label not in ["=", "Del"]:
                     button = MDRaisedButton(

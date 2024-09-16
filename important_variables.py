@@ -230,7 +230,7 @@ LANGUAGES_DIALOGS_ENG = {
     "admin_and_manager": "Only admin and manager users are allowed to do this.",
     "most_popular_products": "Most popular products",
     "transaction_history": "Transaction history",
-    "rbcc": "Reduce background color concentration",
+    "rbcc": "    Reduce background color concentration",
     "dark_mode": "Dark mode",
     "filter": "Filter",
     "delete": "Delete",

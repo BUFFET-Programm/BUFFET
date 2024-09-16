@@ -164,8 +164,8 @@ class MainApp(MDApp):
         theme_color = theme_[1]
         self.title = self.language_dialogs['title']
         self.theme_cls = ThemeManager()
-        self.theme_cls.theme_style_switch_animation = True
         self.theme_cls.theme_style = theme
+        print(dir(self.theme_cls))
         if rbcc_ == "True":
             self.theme_cls.colors["Light"] = {
                 "StatusBar": "E0E0E0",
