@@ -34,6 +34,7 @@ except ModuleNotFoundError:
 
 try:
     import pygame
+    pygame.init()
 except ModuleNotFoundError:
     have_error = True
     print('pygame module not found. you can install it with run this line in cmd:\npython -m pip install pygame')
