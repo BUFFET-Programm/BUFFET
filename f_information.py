@@ -35,7 +35,7 @@ KV = """
         pos_hint: {"x": .35, "y": .3}
     MDLabel:
         halign: "center"
-        text: "4.0.6"
+        text: "4.0.7"
         font_size: 25
         size_hint: .2, .2
         pos_hint: {"x": .4, "y": .2}
