@@ -130,7 +130,7 @@ For the first time, our program was sent to the Khwarazmi Youth Festival, which 
 Logo of Khwarazmi Youth Festival👆👆
 
 ## Contact
-ّf you have any Suggestion or criticism, we will be happy to hear:
+If you have any suggestion or criticism, we will be happy to hear:
 * mohammadhesamafzali131415@gmail.com for front
 * parsasafaie.2568@gmail.com for back 
 
