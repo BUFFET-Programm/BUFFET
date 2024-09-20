@@ -1,9 +1,12 @@
 import platform
+import os
 os_name = platform.system()
 if os_name == 'Windows':
     BASE_DIR = 'C:/BUFFET'
 else:
-    BASE_DIR = '/home/parsa/BUFFET'
+    username = os.environ.get('USER')
+    BASE_DIR = '/home/'+username+'/BUFFET'
+    print(BASE_DIR)
 SPECIAL_EXTENSION = '.BUFT'
 THEME_PATH = BASE_DIR+'/data/text/theme'+SPECIAL_EXTENSION
 BUFFET_EXTENSIONS_PATH = BASE_DIR+'/extensions'
