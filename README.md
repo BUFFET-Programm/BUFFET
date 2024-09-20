@@ -69,7 +69,7 @@ Creator can change level of other user from the Users page. Of course, these thr
 
 Now we have requirements for register a buyer. Let's do it from this path: home page -> register :
 
-!![register-buyer-final](https://github.com/user-attachments/assets/f54a1682-bd7f-481f-8d6a-c6add92fff44)
+![register-buyer-final](https://github.com/user-attachments/assets/f54a1682-bd7f-481f-8d6a-c6add92fff44)
 
 After hit `Register` button, process starts and take a few secondes, then you will be returned to the home page.
 
