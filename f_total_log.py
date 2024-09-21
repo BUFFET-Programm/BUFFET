@@ -45,7 +45,15 @@ KV = """
         MDBoxLayout:
             size_hint_y: .2
             MDPersianLabel:
-                label_text: app.language_dialogs["name"]
+                label_text: app.language_dialogs["products"]
+                size_hint: .2, .2
+                font_size: 30
+            MDPersianLabel:
+                label_text: app.language_dialogs["date"]
+                size_hint: .2, .2
+                font_size: 30
+            MDPersianLabel:
+                label_text: app.language_dialogs["price"]
                 size_hint: .1, .2
                 font_size: 30
             MDPersianLabel:
@@ -53,16 +61,8 @@ KV = """
                 size_hint: .1, .2
                 font_size: 30
             MDPersianLabel:
-                label_text: app.language_dialogs["price"]
+                label_text: app.language_dialogs["name"]
                 size_hint: .1, .2
-                font_size: 30
-            MDPersianLabel:
-                label_text: app.language_dialogs["date"]
-                size_hint: .2, .2
-                font_size: 30
-            MDPersianLabel:
-                label_text: app.language_dialogs["products"]
-                size_hint: .2, .2
                 font_size: 30
         MDBoxLayout:
             orientation: "horizontal"

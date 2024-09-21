@@ -6,7 +6,6 @@ if os_name == 'Windows':
 else:
     username = os.environ.get('USER')
     BASE_DIR = '/home/'+username+'/BUFFET'
-    print(BASE_DIR)
 SPECIAL_EXTENSION = '.BUFT'
 THEME_PATH = BASE_DIR+'/data/text/theme'+SPECIAL_EXTENSION
 BUFFET_EXTENSIONS_PATH = BASE_DIR+'/extensions'
