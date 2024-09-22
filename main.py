@@ -21,6 +21,12 @@ except ModuleNotFoundError:
     print('opencv face recognizer not found. you can install it with run this line in cmd:\npython -m pip install opencv-contrib-python')
 
 try:
+    import PyQt6
+except:
+    have_error = True
+    print('PyQt6 not found. you can install it with run this line in cmd:\npython -m pip install PyQt6')
+
+try:
     from arabic_reshaper import reshape
 except ModuleNotFoundError:
     have_error = True

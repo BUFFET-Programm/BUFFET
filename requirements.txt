@@ -52,6 +52,9 @@ pure_eval==0.2.3
 pygame==2.6.0
 Pygments==2.18.0
 pyparsing==3.1.4
+PyQt6==6.7.1
+PyQt6-Qt6==6.7.2
+PyQt6_sip==13.8.0
 python-bidi==0.6.0
 python-dateutil==2.9.0.post0
 pyzmq==26.2.0

@@ -32,7 +32,7 @@ def create_files_and_folders() -> None:
         except:
             pass
         try:
-            db.execute('CREATE TABLE logs (name text, operation text, price int, date datetime, products text)')
+            db.execute('CREATE TABLE logs (name text, operation text, price int, date datetime, products text, user_name text)')
         except:
             pass
         try:

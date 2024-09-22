@@ -1,6 +1,7 @@
 from datetime import datetime, date as d
 import sqlite3
 from important_variables import DATABASE_PATH
+from b_manage_users import current_user_name
 
 
 def save_log(name: str, operation: str, price: str, products: str) -> None:
@@ -8,7 +9,8 @@ def save_log(name: str, operation: str, price: str, products: str) -> None:
     db = sqlite3.connect(DATABASE_PATH)
     date_as_str = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     date = datetime.strptime(date_as_str, '%Y-%m-%d %H:%M:%S')
-    db.execute('INSERT INTO logs (name,operation,price,date,products) VALUES (?,?,?,?,?)', (name, operation, price, date, products))
+    user_name = current_user_name()
+    db.execute('INSERT INTO logs (name,operation,price,date,products,user_name) VALUES (?,?,?,?,?,?)', (name, operation, price, date, products, user_name))
     db.commit()
     db.close()
 

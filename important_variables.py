@@ -144,7 +144,8 @@ LANGUAGES_DIALOGS_PER = {
     "new_name": "نام جدید",
     "done2": "انجام",
     'buffet_log_as_chart': 'تاریخچه فروشگاه بر روی نمودار',
-    "auto": "خودکار"
+    "auto": "خودکار",
+    "compare_activity_of_users": "مقایسه فروش فروشندگان"
 }
 LANGUAGES_DIALOGS_ENG = {
     "title": "Buffet",
@@ -266,5 +267,6 @@ LANGUAGES_DIALOGS_ENG = {
     "new_name": "New name",
     "done2": "Done",
     'buffet_log_as_chart': 'Buffet history as chart',
-    "auto": "Auto"
+    "auto": "Auto",
+    "compare_activity_of_users": "Compare acivity of sellers"
 }

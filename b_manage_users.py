@@ -109,14 +109,17 @@ def change_user_type(name:str):
     db.commit()
     db.close()
 
-def all_users() -> list:
+def all_users(need_creator:bool=False) -> list:
     '''Returns a list of all users, except Creator.'''
     db = sqlite3.connect(DATABASE_PATH)
     cursor = db.execute('SELECT name FROM users')
     data = cursor.fetchall()
     users = [user[0] for user in data]
     db.close()
-    return users[1:]
+    if need_creator:
+        return users
+    else:
+        return users[1:]
 
 def forget_password(name:str) -> int | str:
     '''When user forgot his password, we use this method for get email and send the code.'''
