@@ -143,7 +143,7 @@ LANGUAGES_DIALOGS_PER = {
     "name_wrong_error": "نام تکراری یا اشتباه است.",
     "new_name": "نام جدید",
     "done2": "انجام",
-    'buffet_log_as_chart': 'تاریخچه فروشگاه بر روی نمودار',
+    'buffet_activity_as_chart': 'عملکرد فروشگاه بر روی نمودار',
     "auto": "خودکار",
     "compare_activity_of_users": "مقایسه فروش فروشندگان"
 }
@@ -266,7 +266,7 @@ LANGUAGES_DIALOGS_ENG = {
     "name_wrong_error": "The name is duplicate or incorrect.",
     "new_name": "New name",
     "done2": "Done",
-    'buffet_log_as_chart': 'Buffet history as chart',
+    'buffet_activity_as_chart': 'Buffet activity as chart',
     "auto": "Auto",
     "compare_activity_of_users": "Compare acivity of sellers"
 }

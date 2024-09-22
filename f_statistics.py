@@ -1,4 +1,4 @@
-from b_total_view import show_the_most_purchased_products, buffet_log_as_chart, compare_activity_of_users
+from b_total_view import show_the_most_purchased_products, buffet_activity_as_chart, compare_activity_of_users
 from kivymd.uix.screen import MDScreen
 
 KV = """
@@ -23,11 +23,11 @@ KV = """
             size_hint: .6, .1
             on_release: root.manager.current = "total_log"
         MDRectangleFlatIconButton:
-            button_text: app.language_dialogs["buffet_log_as_chart"]
+            button_text: app.language_dialogs["buffet_activity_as_chart"]
             icon: "chart-areaspline"
             pos_hint: {"x": .2, "y": .3}
             size_hint: .6, .1
-            on_release: root.buffet_log_as_chart()
+            on_release: root.buffet_activity_as_chart()
         MDRectangleFlatIconButton:
             button_text: app.language_dialogs["compare_activity_of_users"]
             icon: "compare"
@@ -40,8 +40,8 @@ KV = """
 class Statistics(MDScreen):
     def show_the_most_purchased_products(self):
         show_the_most_purchased_products()
-    def buffet_log_as_chart(self):
-        buffet_log_as_chart()
+    def buffet_activity_as_chart(self):
+        buffet_activity_as_chart()
     def compare_activity_of_users(self):
         compare_activity_of_users()
 

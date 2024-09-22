@@ -30,7 +30,8 @@ def show_the_most_purchased_products() -> plt.bar:
     except IndexError:
         pass
 
-def buffet_log_as_chart():
+def buffet_activity_as_chart() -> plt.plot:
+        """Shows buffet activity by date as chart."""
         db = sqlite3.connect(DATABASE_PATH)
         today = d.today()
         dates = [str(today)]
@@ -68,20 +69,21 @@ def buffet_log_as_chart():
         if lang == 'per':
             plt.xlabel(get_display(reshape("تاریخ")))
             plt.ylabel(get_display(reshape("مبلغ")))
-            plt.title(get_display(reshape("تاریخچه بوفه")))
+            plt.title(get_display(reshape("عملکرد بوفه")))
             plt.plot(buy_keys, buy_values, label='خرید')
             plt.plot(charge_keys, charge_values, label='شارژ')
         else:
             plt.xlabel(get_display(reshape("Date")))
             plt.ylabel(get_display(reshape("Price")))
-            plt.title(get_display(reshape("Buffet history")))
+            plt.title(get_display(reshape("Buffet activity")))
             plt.plot(buy_keys, buy_values, label='Buy')
             plt.plot(charge_keys, charge_values, label='Charge')
         plt.show()
         db.close()
 
 
-def compare_activity_of_users():
+def compare_activity_of_users() -> plt.bar:
+        """Compares activity of sellers. Create competition with this feature!"""
         db = sqlite3.connect(DATABASE_PATH)
         users = all_users(True)
         buys = {}
@@ -109,6 +111,16 @@ def compare_activity_of_users():
         buy_values = buys.values()
         charge_keys = charges.keys()
         charge_values = charges.values()
+        with open(LANGUAGE_PATH, 'r') as file:
+            lang = file.read()
+        if lang == 'per':
+            plt.xlabel(get_display(reshape("فروشنده")))
+            plt.ylabel(get_display(reshape("مبلغ")))
+            plt.title(get_display(reshape("مقایسه فروش فروشندگان")))
+        else:
+            plt.xlabel(get_display(reshape("Seller")))
+            plt.ylabel(get_display(reshape("Price")))
+            plt.title(get_display(reshape("Compare activity of sellers")))
         plt.bar(buy_keys, buy_values)
         plt.bar(charge_keys, charge_values)
         plt.show()
