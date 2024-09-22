@@ -4,6 +4,7 @@ import sqlite3
 from bidi.algorithm import get_display
 from arabic_reshaper import reshape
 from datetime import date as d ,timedelta
+from b_manage_users import all_users
 
 
 def show_the_most_purchased_products() -> plt.bar:
@@ -78,3 +79,36 @@ def buffet_log_as_chart():
             plt.plot(charge_keys, charge_values, label='Charge')
         plt.show()
         db.close()
+
+
+def compare_activity_of_users():
+        db = sqlite3.connect(DATABASE_PATH)
+        users = all_users(True)
+        buys = {}
+        charges = {}
+        for user in users:
+            cursor_buy  = db.execute('SELECT price From logs WHERE user_name=? AND operation=?', (user,'buy'))
+            cursor_charge = db.execute('SELECT price From logs WHERE user_name=? AND operation=?', (user,'charge'))
+            buys[str(user)] = cursor_buy.fetchall()
+            charges[str(user)] = cursor_charge.fetchall()
+        for user in buys.keys():
+            buy_operations = buys[user]
+            buy_price = 0
+            for operation in buy_operations:
+                price = operation[0]
+                buy_price += price
+            buys[user] = buy_price
+        for user in charges.keys():
+            charge_operations = charges[user]
+            charge_price = 0
+            for operation in charge_operations:
+                price = operation[0]
+                charge_price += price
+            charges[user] = charge_price
+        buy_keys = buys.keys()
+        buy_values = buys.values()
+        charge_keys = charges.keys()
+        charge_values = charges.values()
+        plt.bar(buy_keys, buy_values)
+        plt.bar(charge_keys, charge_values)
+        plt.show()
