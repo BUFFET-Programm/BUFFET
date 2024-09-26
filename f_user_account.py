@@ -344,18 +344,18 @@ KV = """
         MDBoxLayout:
             orientation: "horizontal"
             MDBoxLayout:
-                id: log_type
-                orientation: "vertical"
-            MDBoxLayout:
-                id: log_value
+                id: log_products
+                size_hint: 2, 1
                 orientation: "vertical"
             MDBoxLayout:
                 id: log_date
                 size_hint: 2, 1
                 orientation: "vertical"
             MDBoxLayout:
-                id: log_products
-                size_hint: 2, 1
+                id: log_value
+                orientation: "vertical"
+            MDBoxLayout:
+                id: log_type
                 orientation: "vertical"
         MDBoxLayout:
             orientation: "horizontal"
