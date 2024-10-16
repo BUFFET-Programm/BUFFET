@@ -123,7 +123,7 @@ Thanks to all those who guided and supported us in this way
 
 
 ## Achievement
-For the first time, our program was sent to the Khwarazmi Youth Festival, which is a big festival in Iran and holds competitions in various fields. Our program reached the first place in the province in this competition and participated in the national level judging, the results of which will be determined soon.
+For the first time, our program was sent to the Khwarazmi Youth Festival, which is a big festival in Iran and holds competitions in various disciplines. Our program reached the first place in Khorasan Razavi province and the second place in the country.
 
 ![jashnvare-final](https://github.com/user-attachments/assets/6356af82-3511-45fe-8877-6e5a22352175)
 
